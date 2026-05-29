@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlowFixer - Debug Route Builder</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <canvas id="flowCanvas" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+      <a class="wordmark" href="#app">flowfixer</a>
+      <nav aria-label="Secciones">
+        <a href="#analyzer">Analyzer</a>
+        <a href="#route">Route</a>
+        <a href="#cases">Cases</a>
+      </nav>
+      <button id="soundToggle" class="tiny-button" type="button">sound</button>
+    </header>
+
+    <main id="app" class="app-shell">
+      <section class="hero-strip reveal">
+        <div>
+          <p class="kicker">offline debug lab</p>
+          <h1>Convierte errores raros en una ruta clara.</h1>
+        </div>
+        <div class="scanner" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </section>
+
+      <section class="tool-grid">
+        <form id="debugForm" class="panel input-panel reveal">
+          <div class="panel-heading">
+            <div>
+              <p class="kicker">input</p>
+              <h2>Pega el error</h2>
+            </div>
+            <div class="mode-switch" role="group" aria-label="Modo de analisis">
+              <button class="mode active" type="button" data-mode="quick">Quick</button>
+              <button class="mode" type="button" data-mode="deep">Deep</button>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Error, stack trace o descripcion</span>
+            <textarea id="errorInput" rows="12" placeholder="Ejemplo: TypeError: Cannot read properties of undefined (reading 'map')"></textarea>
+          </label>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Stack</span>
+              <select id="stackInput">
+                <option value="auto">Auto detectar</option>
+                <option value="javascript">JavaScript / Node</option>
+                <option value="react">React / Vite</option>
+                <option value="python">Python</option>
+                <option value="git">Git</option>
+                <option value="android">Android</option>
+                <option value="web">HTML / CSS</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Contexto rapido</span>
+              <input id="contextInput" type="text" placeholder="Que estabas intentando hacer?" />
+            </label>
+          </div>
+
+          <div class="action-row">
+            <button class="primary-action" type="submit">Analizar</button>
+            <button id="demoButton" class="secondary-action" type="button">Demo</button>
+            <button id="clearButton" class="secondary-action" type="button">Limpiar</button>
+          </div>
+        </form>
+
+        <aside id="route" class="panel route-panel reveal" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <p class="kicker">route</p>
+              <h2>Ruta de solucion</h2>
+            </div>
+            <output id="confidenceOutput" class="confidence">0%</output>
+          </div>
+
+          <div id="summaryCard" class="summary-card">
+            <p>Pega un error y FlowFixer te arma el mapa de debug.</p>
+          </div>
+
+          <div id="signalList" class="signal-list"></div>
+
+          <div class="action-row">
+            <button id="copyButton" class="secondary-action" type="button">Copiar reporte</button>
+            <button id="saveButton" class="secondary-action" type="button">Guardar caso</button>
+            <button id="exportButton" class="secondary-action" type="button">Exportar .md</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="result-grid">
+        <article id="analyzer" class="panel reveal">
+          <p class="kicker">checklist</p>
+          <h2>Debug path</h2>
+          <ol id="debugSteps" class="step-list"></ol>
+        </article>
+
+        <article class="panel reveal">
+          <p class="kicker">commands</p>
+          <h2>Comandos sugeridos</h2>
+          <div id="commandList" class="command-list"></div>
+        </article>
+
+        <article class="panel reveal">
+          <p class="kicker">prompt</p>
+          <h2>Para pedir ayuda sin perder contexto</h2>
+          <pre id="helpPrompt">Aqui aparecera un prompt limpio para pedir ayuda a una IA o a un teammate.</pre>
+        </article>
+      </section>
+
+      <section id="cases" class="panel cases-panel reveal">
+        <div class="panel-heading">
+          <div>
+            <p class="kicker">local history</p>
+            <h2>Casos guardados</h2>
+          </div>
+          <button id="clearCasesButton" class="tiny-button" type="button">borrar</button>
+        </div>
+        <div id="caseList" class="case-list"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="src/app.js"></script>
+  </body>
+</html>

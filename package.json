@@ -1,0 +1,10 @@
+{
+  "name": "flowfixer",
+  "version": "1.0.0",
+  "description": "Offline debugging route builder for turning programming errors into clear fix plans.",
+  "private": true,
+  "scripts": {
+    "check": "node --check src/app.js",
+    "serve": "python -m http.server 5308"
+  }
+}
